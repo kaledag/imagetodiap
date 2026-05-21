@@ -16,7 +16,7 @@
   --blue:#9898d8;--bbg:#141428;--bborder:#2a2a68;
   --red:#d89090;--rbg:#281818;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono','Courier New',monospace;font-size:14px;font-weight:600;overflow:hidden}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono','Courier New',monospace;font-size:13px;font-weight:600;overflow:hidden}
 ::-webkit-scrollbar{width:3px;background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 #app{display:flex;flex-direction:column;height:100vh}
@@ -26,9 +26,9 @@ header{flex-shrink:0;border-bottom:1px solid var(--bg3);padding:0 20px;height:52
 .logo-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--accent)}
 .logo-sub{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:1px}
 .hdr-r{font-size:11px;color:var(--muted);font-weight:600}
-.toolbar{flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:7px 14px;display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
-.tb-group{display:flex;flex-direction:column;gap:4px}
-.tb-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.toolbar{flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:5px 12px;display:flex;align-items:center;gap:8px;flex-wrap:nowrap;overflow-x:auto}
+.tb-group{display:flex;flex-direction:row;align-items:center;gap:4px;border-right:1px solid var(--border);padding-right:8px}
+.tb-label{display:none}
 .tb-row{display:flex;gap:4px;align-items:center}
 .pill{cursor:pointer;border:1.5px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:'DM Mono',monospace;font-weight:700;background:var(--bg);color:var(--muted);transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:4px;user-select:none}
 .pill:hover{border-color:var(--border2);color:var(--text)}
@@ -38,7 +38,7 @@ header{flex-shrink:0;border-bottom:1px solid var(--bg3);padding:0 20px;height:52
 .dur-wrap{display:flex;align-items:center;gap:6px}
 .dur-wrap input[type=range]{width:70px;accent-color:var(--accent);cursor:pointer}
 .dur-v{font-size:13px;font-weight:800;color:var(--accent);min-width:26px}
-.main{flex:1;min-height:0;display:grid;grid-template-columns:180px 1fr 220px}
+.main{flex:1;min-height:0;display:grid;grid-template-columns:160px 1fr 200px}
 .left{display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden}
 .drop-zone{flex-shrink:0;border:2px dashed var(--border);border-radius:9px;margin:12px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s}
 .drop-zone:hover,.drop-zone.over{border-color:var(--accent);background:rgba(232,223,192,.04)}
@@ -74,7 +74,7 @@ header{flex-shrink:0;border-bottom:1px solid var(--bg3);padding:0 20px;height:52
 .player-img.active{opacity:1;z-index:2}
 .player-img-wrap{position:absolute;inset:0;z-index:1}
 .player-img-wrap .bg-blur{position:absolute;inset:-20px;background-size:cover;background-position:center;filter:blur(18px);transform:scale(1.1);opacity:.7}
-.player-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:2}
+.player-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:2;padding:0}
 .player-img-wrap{opacity:0;transition:opacity .5s ease}
 .player-img-wrap.active{opacity:1;z-index:3}
 .player-img-wrap.prev{opacity:0;z-index:2}
@@ -151,14 +151,14 @@ header{flex-shrink:0;border-bottom:1px solid var(--bg3);padding:0 20px;height:52
 
   <div class="toolbar">
     <div class="tb-group">
-      <div class="tb-label">Langue</div>
+      <span style="font-size:10px;color:var(--dim);white-space:nowrap">Lang:</span>
       <div class="tb-row">
         <div class="pill sel-ar" data-lang="ar">🇸🇦 عربية</div>
         <div class="pill" data-lang="fr">🇫🇷 Français</div>
       </div>
     </div>
     <div class="tb-group">
-      <div class="tb-label">Format</div>
+      <span style="font-size:10px;color:var(--dim);white-space:nowrap">Format:</span>
       <div class="tb-row">
         <div class="pill sel" data-fmt="1920x1080">1920×1080 <span style="font-size:9px;opacity:.6">Paysage</span></div>
         <div class="pill" data-fmt="1080x1920">1080×1920 <span style="font-size:9px;opacity:.6">Vertical</span></div>
@@ -167,7 +167,7 @@ header{flex-shrink:0;border-bottom:1px solid var(--bg3);padding:0 20px;height:52
       </div>
     </div>
     <div class="tb-group">
-      <div class="tb-label">Durée / image</div>
+      <span style="font-size:10px;color:var(--dim);white-space:nowrap">Durée:</span>
       <div class="tb-row">
         <div class="tb-row" id="dur-row">
           <div class="pill" data-dur="3">3s</div>
@@ -182,7 +182,7 @@ header{flex-shrink:0;border-bottom:1px solid var(--bg3);padding:0 20px;height:52
       </div>
     </div>
     <div class="tb-group">
-      <div class="tb-label">Transition</div>
+      <span style="font-size:10px;color:var(--dim);white-space:nowrap">Trans:</span>
       <div class="tb-row">
         <div class="pill sel" data-trans="slide">Glissement</div>
         <div class="pill" data-trans="fade">Fondu</div>
@@ -190,7 +190,7 @@ header{flex-shrink:0;border-bottom:1px solid var(--bg3);padding:0 20px;height:52
       </div>
     </div>
     <div class="tb-group">
-      <div class="tb-label">Échelle export</div>
+      <span style="font-size:10px;color:var(--dim);white-space:nowrap">Échelle:</span>
       <div class="tb-row">
         <div class="pill sel" data-scale="cover">Remplir</div>
         <div class="pill" data-scale="contain">Contenir</div>
