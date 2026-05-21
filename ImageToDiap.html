@@ -437,9 +437,27 @@ document.addEventListener('keydown',e=>{
   else if(e.code==='ArrowRight')goNext();
   else if(e.code==='ArrowLeft')goPrev();
 });
-function togglePlay(){if(!S.images.length||S.images.length<2)return;S.playing?stopPlay():startPlay();}
-function startPlay(){S.playing=true;document.getElementById('approval-banner').style.display='none';if(S.current>=S.images.length-1)S.current=0;drawStatic(S.current);updatePlayBtn();scheduleNext();}
-function scheduleNext(){clearTimeout(S.autoTimer);if(!S.playing)return;S.autoTimer=setTimeout(()=>{if(!S.playing)return;goNext();},S.duration*1000);}
+function togglePlay(){
+  if(S.images.length<2)return;
+  if(S.playing){stopPlay();}else{startPlay();}
+}
+function startPlay(){
+  if(S.images.length<2)return;
+  S.playing=true;
+  document.getElementById('approval-banner').style.display='none';
+  if(S.current>=S.images.length-1){S.current=0;drawStatic(0);}
+  updatePlayBtn();
+  scheduleNext();
+}
+function scheduleNext(){
+  clearTimeout(S.autoTimer);
+  if(!S.playing)return;
+  S.autoTimer=setTimeout(()=>{
+    if(!S.playing)return;
+    if(S.transitioning){scheduleNext();return;}
+    goNext();
+  },S.duration*1000);
+}
 function stopPlay(){S.playing=false;clearTimeout(S.autoTimer);updatePlayBtn();updateControls();}
 function showApproval(){document.getElementById('approval-banner').style.display='block';}
 function resetUI(){document.getElementById('approval-banner').style.display='none';document.getElementById('dl-btn').style.display='none';document.getElementById('progress-block').style.display='none';document.getElementById('err-box').style.display='none';document.getElementById('convert-tip').style.display='none';}
