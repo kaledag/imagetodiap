@@ -445,10 +445,15 @@ function showApproval(){document.getElementById('approval-banner').style.display
 function resetUI(){document.getElementById('approval-banner').style.display='none';document.getElementById('dl-btn').style.display='none';document.getElementById('progress-block').style.display='none';document.getElementById('err-box').style.display='none';document.getElementById('convert-tip').style.display='none';}
 function updatePlayBtn(){const btn=document.getElementById('btn-play');btn.textContent=S.playing?'⏸ Pause':'▶ Play';btn.classList.toggle('active',S.playing);}
 function updateControls(){
-  const n=S.images.length,ok=n>=2&&!S.transitioning;
-  ['btn-prev','btn-first','btn-step-prev'].forEach(id=>document.getElementById(id).disabled=!ok||S.current===0);
-  ['btn-next','btn-last','btn-step-next'].forEach(id=>document.getElementById(id).disabled=!ok||S.current===n-1);
-  document.getElementById('btn-play').disabled=!ok;
+  const n=S.images.length;
+  document.getElementById('btn-play').disabled=n<2;
+  const ok=n>=2&&!S.transitioning;
+  document.getElementById('btn-prev').disabled=!ok||S.current===0;
+  document.getElementById('btn-first').disabled=!ok||S.current===0;
+  document.getElementById('btn-step-prev').disabled=!ok||S.current===0;
+  document.getElementById('btn-next').disabled=!ok||S.current===n-1;
+  document.getElementById('btn-last').disabled=!ok||S.current===n-1;
+  document.getElementById('btn-step-next').disabled=!ok||S.current===n-1;
 }
 
 // Approve → Canvas + MediaRecorder
